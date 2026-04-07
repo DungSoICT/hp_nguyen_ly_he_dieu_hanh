@@ -79,7 +79,7 @@ void *producer(void *arg) {
            - Counter++ để phản ánh số phần tử mới trong buffer */
         Counter++;
 
-        print_state("Producer", "dua vao buffer", nextProduced);
+        print_state("Producer", "cho vô buffer", nextProduced);
 
         usleep(100000);
     }
@@ -124,7 +124,7 @@ void *consumer(void *arg) {
            - Counter-- để phản ánh số phần tử còn lại */
         Counter--;
 
-        print_state("Consumer", "lay ra khoi buffer", nextConsumed);
+        print_state("Consumer", "lấy ra khỏi buffer", nextConsumed);
 
         consume_item(nextConsumed);
 
@@ -159,11 +159,11 @@ int main() {
        yếu cố cần có:
        - Sau khi chương trình kết thúc , toàn bộ dữ liệu đã được tiêu thụ
        - Counter kỳ vọng quay về 0
-       áp dụng:
+    áp dụng:
        - In trạng thái cuối để kiểm chứng 0 ≤ Counter ≤ BUFFER_SIZE
        - Thường kết thúc với Counter = 0 nếu Consumer đã lấy hết */
-    printf("\nTrang thai cuoi cung:\n");
-    print_state("Main", "ket thuc chuong trinh", -1);
+    printf("\ntrạng thái cuối cùng:\n");
+    print_state("Main", "kết thúc chương trình", -1);
 
     return 0;
 }
