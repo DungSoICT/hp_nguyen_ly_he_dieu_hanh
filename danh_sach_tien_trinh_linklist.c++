@@ -20,60 +20,60 @@ using namespace std;
 
 // Cấu trúc PCB: lưu toàn bộ thông tin quản lý một tiến trình
 struct PCB {
-    string pid;                        // Mã tiến trình ; ví dụ P1 ; P2
-    string processState;               // Trạng thái tiến trình ; ví dụ ready ; running ; waiting
-    int programCounter;                // Bộ đếm chương trình
-    vector<int> registers;             // Các thanh ghi
-    pair<int, int> memoryLimits;       // Giới hạn bộ nhớ ; [start ; end]
-    vector<string> openFiles;          // Danh sách file đang mở
-    PCB* next;                         // Con trỏ liên kết sang PCB kế tiếp
+        string pid;                        // Mã tiến trình ; ví dụ P1 ; P2
+        string processState;               // Trạng thái tiến trình ; ví dụ ready ; running ; waiting
+        int programCounter;                // Bộ đếm chương trình
+        vector<int> registers;             // Các thanh ghi
+        pair<int, int> memoryLimits;       // Giới hạn bộ nhớ ; [start ; end]
+        vector<string> openFiles;          // Danh sách file đang mở
+        PCB* next;                         // Con trỏ liên kết sang PCB kế tiếp
 
-    PCB(
-        const string& pid_,
-        const string& state_,
-        int pc_,
-        const vector<int>& regs_,
-        pair<int, int> mem_,
-        const vector<string>& files_
-    ) : pid(pid_),
-        processState(state_),
-        programCounter(pc_),
-        registers(regs_),
-        memoryLimits(mem_),
-        openFiles(files_),
-        next(nullptr) {}
-};
+        PCB(
+            const string& pid_,
+            const string& state_,
+            int pc_,
+            const vector<int>& regs_,
+            pair<int, int> mem_,
+            const vector<string>& files_
+        ) : pid(pid_),
+            processState(state_),
+            programCounter(pc_),
+            registers(regs_),
+            memoryLimits(mem_),
+            openFiles(files_),
+            next(nullptr) {}
+    };
 
 // Lớp ProcessList: quản lý danh sách tiến trình bằng linked list
 class ProcessList {
 private:
-    PCB* head;                         // Con trỏ đầu danh sách
-    PCB* tail;                         // Con trỏ cuối danh sách
-    int size;                          // Số lượng tiến trình hiện tại
+        PCB* head;                         // Con trỏ đầu danh sách
+        PCB* tail;                         // Con trỏ cuối danh sách
+        int size;                          // Số lượng tiến trình hiện tại
 
-    // Hàm phụ: chuyển vector<int> thành chuỗi để in đẹp
-    string joinRegisters(const vector<int>& regs) const {
-        ostringstream oss;             // Dùng để ghép chuỗi thanh ghi
-        oss << "[";                    // Mở ngoặc danh sách
-        for (size_t i = 0; i < regs.size(); ++i) {
-            oss << regs[i];            // In giá trị thanh ghi thứ i
-            if (i + 1 < regs.size()) oss << " ; "; // Ngăn cách bằng dấu ;
+        // Hàm phụ: chuyển vector<int> thành chuỗi để in đẹp
+        string joinRegisters(const vector<int>& regs) const {
+            ostringstream oss;             // Dùng để ghép chuỗi thanh ghi
+            oss << "[";                    // Mở ngoặc danh sách
+            for (size_t i = 0; i < regs.size(); ++i) {
+                oss << regs[i];            // In giá trị thanh ghi thứ i
+                if (i + 1 < regs.size()) oss << " ; "; // Ngăn cách bằng dấu ;
+            }
+            oss << "]";                    // Đóng ngoặc danh sách
+            return oss.str();
         }
-        oss << "]";                    // Đóng ngoặc danh sách
-        return oss.str();
-    }
 
-    // Hàm phụ: chuyển vector<string> thành chuỗi để in đẹp
-    string joinFiles(const vector<string>& files) const {
-        ostringstream oss;             // Dùng để ghép chuỗi file
-        oss << "[";                    // Mở ngoặc danh sách
-        for (size_t i = 0; i < files.size(); ++i) {
-            oss << files[i];           // In tên file thứ i
-            if (i + 1 < files.size()) oss << " ; "; // Ngăn cách bằng dấu ;
+        // Hàm phụ: chuyển vector<string> thành chuỗi để in đẹp
+        string joinFiles(const vector<string>& files) const {
+            ostringstream oss;             // Dùng để ghép chuỗi file
+            oss << "[";                    // Mở ngoặc danh sách
+            for (size_t i = 0; i < files.size(); ++i) {
+                oss << files[i];           // In tên file thứ i
+                if (i + 1 < files.size()) oss << " ; "; // Ngăn cách bằng dấu ;
+            }
+            oss << "]";                    // Đóng ngoặc danh sách
+            return oss.str();
         }
-        oss << "]";                    // Đóng ngoặc danh sách
-        return oss.str();
-    }
 
 public:
     // Hàm khởi tạo: tạo danh sách tiến trình rỗng
@@ -98,7 +98,7 @@ public:
     }
 
     // Hàm insertTail: thêm một PCB vào cuối danh sách ; ý (2)
-    void insertTail(PCB* newNode) {
+void insertTail(PCB* newNode) {
         if (newNode == nullptr) return;                // Nếu node rỗng thì bỏ qua
 
         if (head == nullptr) {                         // Danh sách đang rỗng
@@ -121,7 +121,7 @@ public:
     }
 
     // Hàm insertHead: thêm một PCB vào đầu danh sách ; ý (3)
-    void insertHead(PCB* newNode) {
+void insertHead(PCB* newNode) {
         if (newNode == nullptr) return;                // Nếu node rỗng thì bỏ qua
 
         if (head == nullptr) {                         // Danh sách đang rỗng
@@ -144,7 +144,7 @@ public:
     }
 
     // Hàm deleteByPID: xóa tiến trình theo PID ; ý (4)
-    bool deleteByPID(const string& pid) {
+bool deleteByPID(const string& pid) {
         if (head == nullptr) return false;            // Danh sách rỗng thì không xóa được
 
         if (head->pid == pid) {                       // Trường hợp xóa node đầu ; ý (4)
@@ -186,7 +186,7 @@ public:
     }
 
     // Hàm traverseAndPrint: duyệt toàn bộ danh sách và in thông tin PCB ; ý (5)
-    void traverseAndPrint() const {
+void traverseAndPrint() const {
         cout << "Danh sach tien trinh hien tai:\n";
         PCB* current = head;                           // Bắt đầu duyệt từ head ; ý (5)
         while (current != nullptr) {                   // Lặp cho tới NULL
@@ -217,7 +217,7 @@ public:
     }
 
     // Hàm findByPID: tìm PCB theo PID để phục vụ context switch ; ý (6)
-    PCB* findByPID(const string& pid) const {
+PCB* findByPID(const string& pid) const {
         PCB* current = head;                           // Bắt đầu từ head
         while (current != nullptr) {                   // Duyệt toàn bộ danh sách
             if (current->pid == pid) {                // Nếu PID khớp
@@ -240,7 +240,7 @@ public:
     }
 
     // Hàm contextSwitch: mô phỏng chuyển CPU từ tiến trình fromPID sang toPID ; ý (6)
-    void contextSwitch(const string& fromPID, const string& toPID) {
+void contextSwitch(const string& fromPID, const string& toPID) {
         PCB* from = findByPID(fromPID);                // Tìm PCB tiến trình cũ
         PCB* to = findByPID(toPID);                    // Tìm PCB tiến trình mới
 
@@ -286,42 +286,43 @@ public:
     }
 
     // Hàm printComplexity: in bảng độ phức tạp của các thao tác ; ý (7)
-    void printComplexity() const {
-        cout << "\nDo phuc tap thao tac:\n";
-        cout << "  - insert head = O(1)\n";
-        cout << "  - insert tail = O(1) neu co tail ; neu khong co tail thi O(n)\n";
-        cout << "  - delete by PID = O(n) neu phai tim node\n";
-        cout << "  - traversal = O(n)\n";
-        cout << "  - find by PID = O(n)\n";
-        cout << "  - context switch logic = O(1) sau khi da co 2 PCB ; nhung neu tim theo PID thi tong the la O(n)\n";
+void printComplexity() const {
+            cout << "\nDo phuc tap thao tac:\n";
+            cout << "  - insert head = O(1)\n";
+            cout << "  - insert tail = O(1) neu co tail ; neu khong co tail thi O(n)\n";
+            cout << "  - delete by PID = O(n) neu phai tim node\n";
+            cout << "  - traversal = O(n)\n";
+            cout << "  - find by PID = O(n)\n";
+            cout << "  - context switch logic = O(1) sau khi da co 2 PCB ; nhung neu tim theo PID thi tong the la O(n)\n";
 
-        /*
-        Cách đọc:
-        - O(1): thao tác hầu như không phụ thuộc số node
-        - O(n): phải duyệt danh sách theo số node
-        - Linked list mạnh ở thêm/xóa đầu-cuối ; yếu ở tìm kiếm tuyến tính
-        */
-    }
-};
+            /*
+            Cách đọc:
+            - O(1): thao tác hầu như không phụ thuộc số node
+            - O(n): phải duyệt danh sách theo số node
+            - Linked list mạnh ở thêm/xóa đầu-cuối ; yếu ở tìm kiếm tuyến tính
+            */
+        }
+    };
 
 // Hàm taoPCB: tạo nhanh một PCB mẫu để code ngắn gọn và dễ đọc
-PCB* taoPCB(
-    const string& pid,                  // PID của tiến trình
-    const string& state,                // Trạng thái ban đầu
-    int pc,                             // Program counter ban đầu
-    const vector<int>& regs,            // Giá trị các thanh ghi
-    pair<int, int> mem,                 // Miền nhớ
-    const vector<string>& files         // Danh sách file mở
-) {
-    PCB* node = new PCB(pid, state, pc, regs, mem, files); // Cấp phát node mới trên heap
-    return node;                                           // Trả node về để gắn vào linked list
 
-    /*
-    Visualization:
-    Input du lieu -> tao 1 PCB moi -> tra con tro PCB*
-    Ham nay chi dong vai tro "xay gach" cho danh sach tien trinh.
-    */
-}
+PCB* taoPCB(
+        const string& pid,                  // PID của tiến trình
+        const string& state,                // Trạng thái ban đầu
+        int pc,                             // Program counter ban đầu
+        const vector<int>& regs,            // Giá trị các thanh ghi
+        pair<int, int> mem,                 // Miền nhớ
+        const vector<string>& files         // Danh sách file mở
+    ) {
+        PCB* node = new PCB(pid, state, pc, regs, mem, files); // Cấp phát node mới trên heap
+        return node;                                           // Trả node về để gắn vào linked list
+
+        /*
+        Visualization:
+        Input du lieu -> tao 1 PCB moi -> tra con tro PCB*
+        Ham nay chi dong vai tro "xay gach" cho danh sach tien trinh.
+        */
+    }
 
 int main() {
     ios::sync_with_stdio(false);        // Tăng tốc I/O
